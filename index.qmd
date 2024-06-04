@@ -4,8 +4,8 @@ title: "Rinu Thomas Data Analysis Portfolio"
 
 # Hello
 
-Welcome to **my website** and _data analysis portfolio._ 
+Welcome to **my website** and data analysis portfolio.
 
+In this website you will find a little bit about myself and the various projects I am working on as part of DA6833 Practicum II class at UTSA.
 
-* Please use the `Menu Bar` above to look around.
-* Have fun!
+-   Please use the `Menu Bar` above to look around.
