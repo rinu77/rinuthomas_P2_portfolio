@@ -10,7 +10,7 @@ My name is Rinu Thomas. I am currently working as **Information Security Advisor
 
 ### Experience in Data Analysis:
 
-I have academic experience in descriptive statistics, inferential statistics and regression analysis, clustering, natural language processing. I have worked with Python, R and SQL in my bachelor's and previous classes taken for this course. One of the recent data analysis I was part of had to do analyzing how laptop prices are influenced by various features such as storage capacity, pixels, battery life etc.
+I have academic experience in descriptive statistics, inferential statistics and regression analysis, clustering, natural language processing. I have worked with Python, R and SQL in my bachelor's and previous classes taken for this course. One of the recent data analysis I was part of had to do with analyzing how laptop prices are influenced by various features such as storage capacity, pixels, battery life etc.
 
 ### Research interest:
 
