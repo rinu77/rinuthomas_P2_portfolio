@@ -3,7 +3,7 @@ project:
   output-dir: docs
 
 website:
-  title: "YOURNAME Data Analysis Portfolio"
+  title: "Rinu Thomas Data Analysis Portfolio"
   navbar:
     left:
       - text: "About Me"
@@ -24,7 +24,7 @@ website:
 
 format:
   html:
-    theme: journal
+    theme: cyborg
     highlight: zenburn
     css: styles.css
     toc: FALSE
