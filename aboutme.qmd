@@ -2,6 +2,20 @@
 title: "About me"
 ---
 
-Add some text and a figure describing myself.
+![My Image](https://raw.githubusercontent.com/rinu77/rinuthomas_P2_portfolio/main/my%20photo.jpeg){width="600"}
 
-For details, see the exercise instructions. 
+My name is Rinu Thomas. I am currently working as **Information Security Advisor** at USAA. I have my bachelor's in **Information Systems and Cyber security**.
+
+### Experience in Data Analysis:
+
+I have academic experience in descriptive statistics, inferential statistics and regression analysis. I have worked with Python, R and SQL in my bachelor's and previous classes taken for this course. I am interested in learning how to create dynamic and interactive dashbaords that allow users to explore data visually.
+
+### Interesting thing about me:
+
+I have over 10 years of training in Karnatic music.
+
+### An interesting website to checkout:
+
+[**OurWorldinChart**](https://ourworldindata.org/artificial-intelligence#all-charts) provides research and data visualizations about the world's largest problems. It's a great resource for seeing how data can be used to understand and address global issues.
+
+For details, see the exercise instructions.
