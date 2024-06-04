@@ -18,4 +18,3 @@ I have over 10 years of training in Karnatic music.
 
 [**OurWorldinChart**](https://ourworldindata.org/artificial-intelligence#all-charts) provides research and data visualizations about the world's largest problems. It's a great resource for seeing how data can be used to understand and address global issues.
 
-For details, see the exercise instructions.
