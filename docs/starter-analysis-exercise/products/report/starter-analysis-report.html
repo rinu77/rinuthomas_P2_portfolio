@@ -6,7 +6,7 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="author" content="RINU THOMAS">
+<meta name="author" content="Your Name">
 <meta name="dcterms.date" content="2024-06-11">
 
 <title>Rinu Thomas Data Analysis Portfolio – Manuscript/Report Template for a Data Analysis Project</title>
@@ -171,7 +171,7 @@ div.csl-indent {
     <div>
     <div class="quarto-title-meta-heading">Author</div>
     <div class="quarto-title-meta-contents">
-             <p>RINU THOMAS </p>
+             <p>Your Name </p>
           </div>
   </div>
     
@@ -194,127 +194,35 @@ div.csl-indent {
 <p>This uses MS Word as output format. <a href="https://quarto.org/docs/output-formats/ms-word.html">See here</a> for more information. You can switch to other formats, like html or pdf. See <a href="https://quarto.org/">the Quarto documentation</a> for other formats.</p>
 <section id="summaryabstract" class="level1" data-number="1">
 <h1 data-number="1"><span class="header-section-number">1</span> Summary/Abstract</h1>
-<p>The primary goal of this project is to develop a predictive model to estimate medical insurance costs for individuals based on their health-related and personal attributes. This model will help in understanding the key factors influencing insurance charges and assist insurance companies in pricing policies more accurately.</p>
+<p><em>Write a summary of your project.</em></p>
 <div style="page-break-after: always;"></div>
 </section>
 <section id="introduction" class="level1" data-number="2">
 <h1 data-number="2"><span class="header-section-number">2</span> Introduction</h1>
 <section id="general-background-information" class="level2" data-number="2.1">
 <h2 data-number="2.1" class="anchored" data-anchor-id="general-background-information"><span class="header-section-number">2.1</span> General Background Information</h2>
-<p>Medical insurance costs are a significant financial consideration for individuals and families. These costs can vary widely based on numerous factors such as age, lifestyle, health conditions, and geographical location. Predicting these costs accurately is crucial for both individuals seeking to manage their healthcare expenses and insurance companies aiming to price their policies effectively.</p>
-<section id="importance-of-predictive-modeling-in-insurance" class="level4" data-number="2.1.0.1">
-<h4 data-number="2.1.0.1" class="anchored" data-anchor-id="importance-of-predictive-modeling-in-insurance"><span class="header-section-number">2.1.0.1</span> Importance of Predictive Modeling in Insurance</h4>
-<p>Predictive modeling plays a vital role in the insurance industry. Accurate predictions of insurance costs enable companies to:</p>
-<ul>
-<li><p>Assess risk more effectively.</p></li>
-<li><p>Set premiums that reflect the actual risk associated with individual policyholders.</p></li>
-<li><p>Enhance customer satisfaction by offering personalized and fair pricing.</p></li>
-</ul>
-<p>On the consumer side, individuals can benefit from understanding the factors that influence their insurance costs, allowing them to make informed choices about their health and financial planning.</p>
-</section>
+<p><em>Provide enough background on your topic that others can understand the why and how of your analysis</em></p>
 </section>
 <section id="description-of-data-and-data-source" class="level2" data-number="2.2">
 <h2 data-number="2.2" class="anchored" data-anchor-id="description-of-data-and-data-source"><span class="header-section-number">2.2</span> Description of data and data source</h2>
 <p><em>Describe what the data is, what it contains, where it is from, etc. Eventually this might be part of a methods section.</em></p>
-<p>The dataset used for this analysis is sourced from Kaggle. The dataset comprises 2.7K rows and 7 columns and contains the following features:</p>
-<ul>
-<li><p><strong>Age</strong>: Age of the individual.</p></li>
-<li><p><strong>Sex</strong>: Gender of the individual (male/female).</p></li>
-<li><p><strong>BMI (Body Mass Index)</strong>: A measure of body fat based on height and weight.</p></li>
-<li><p><strong>Children</strong>: Number of children/dependents covered by the insurance plan.</p></li>
-<li><p><strong>Smoker</strong>: Smoking status of the individual (yes/no).</p></li>
-<li><p><strong>Region</strong>: Geographical region in the US where the individual resides (northeast, southeast, southwest, northwest).</p></li>
-<li><p><strong>Charges</strong>: Medical insurance costs billed by the insurance company (target variable).</p></li>
-</ul>
-<section id="section" class="level3" data-number="2.2.1">
-<h3 data-number="2.2.1" class="anchored" data-anchor-id="section"><span class="header-section-number">2.2.1</span> </h3>
-</section>
+<p>I added two column to exampledata2.xlsx</p>
+<ol type="1">
+<li>Eye Color - Color of the person’s eyes</li>
+<li>Waist size - Waist size of the person in inches</li>
+</ol>
 </section>
 <section id="questionshypotheses-to-be-addressed" class="level2" data-number="2.3">
 <h2 data-number="2.3" class="anchored" data-anchor-id="questionshypotheses-to-be-addressed"><span class="header-section-number">2.3</span> Questions/Hypotheses to be addressed</h2>
 <p><em>State the research questions you plan to answer with this analysis.</em></p>
-<p>The primary question we aim to answer using the “Medical Insurance Cost Prediction” dataset is:</p>
-<p><strong>“What are the key factors influencing medical insurance costs, and how accurately can we predict these costs based on individuals’ demographic and health-related attributes?”</strong></p>
-<section id="outcomes-of-interest" class="level3" data-number="2.3.1">
-<h3 data-number="2.3.1" class="anchored" data-anchor-id="outcomes-of-interest"><span class="header-section-number">2.3.1</span> Outcomes of Interest</h3>
-<p>The main outcome of interest in this analysis is:</p>
-<ul>
-<li><strong>Medical Insurance Costs (charges)</strong>: The amount billed by the insurance company for an individual’s medical insurance.</li>
-</ul>
-</section>
-<section id="specific-predictors" class="level3" data-number="2.3.2">
-<h3 data-number="2.3.2" class="anchored" data-anchor-id="specific-predictors"><span class="header-section-number">2.3.2</span> Specific Predictors</h3>
-<p>The specific predictors (independent variables) we will focus on include:</p>
-<ul>
-<li><p><strong>Age</strong>: How age influences insurance costs.</p></li>
-<li><p><strong>Sex</strong>: The impact of gender on insurance costs.</p></li>
-<li><p><strong>BMI (Body Mass Index)</strong>: The relationship between BMI and insurance costs.</p></li>
-<li><p><strong>Children</strong>: How the number of dependents affects insurance costs.</p></li>
-<li><p><strong>Smoker</strong>: The effect of smoking status on insurance costs.</p></li>
-<li><p><strong>Region</strong>: Regional differences in insurance costs within the US.</p></li>
-</ul>
-</section>
-<section id="relationspatterns-of-interest" class="level3" data-number="2.3.3">
-<h3 data-number="2.3.3" class="anchored" data-anchor-id="relationspatterns-of-interest"><span class="header-section-number">2.3.3</span> Relations/Patterns of Interest</h3>
-<p>I am looking for several key relationships and patterns in the data, including:</p>
-<ol type="1">
-<li><p><strong>Age and Insurance Costs</strong>:</p>
-<ul>
-<li>Investigating whether older individuals tend to have higher medical insurance costs.</li>
-</ul></li>
-<li><p><strong>Gender Differences</strong>:</p>
-<ul>
-<li>Analyzing whether there is a significant difference in insurance costs between males and females.</li>
-</ul></li>
-<li><p><strong>BMI and Insurance Costs</strong>:</p>
-<ul>
-<li><p>Exploring the relationship between an individual’s BMI and their medical insurance costs.</p></li>
-<li><p>Identifying any nonlinear patterns where very high or very low BMI values might correlate with higher insurance costs.</p></li>
-</ul></li>
-<li><p><strong>Impact of Smoking</strong>:</p>
-<ul>
-<li><p>Assessing how smoking status (yes/no) affects insurance costs.</p></li>
-<li><p>Quantifying the cost difference between smokers and non-smokers.</p></li>
-</ul></li>
-<li><p><strong>Number of Children</strong>:</p>
-<ul>
-<li>Examining whether having more dependents (children) increases insurance costs.</li>
-</ul></li>
-<li><p><strong>Regional Variations</strong>:</p>
-<ul>
-<li>Identifying differences in insurance costs across different regions in the US (northeast, southeast, southwest, northwest).</li>
-</ul></li>
-</ol>
 <p>To cite other work (important everywhere, but likely happens first in introduction), make sure your references are in the bibtex file specified in the YAML header above (here <code>dataanalysis_template_references.bib</code>) and have the right bibtex key. Then you can include like this:</p>
 <p>Examples of reproducible research projects can for instance be found in <span class="citation" data-cites="mckay2020 mckay2020a">(<a href="#ref-mckay2020" role="doc-biblioref">McKay, Ebell, Billings, et al., 2020</a>; <a href="#ref-mckay2020a" role="doc-biblioref">McKay, Ebell, Dale, Shen, &amp; Handel, 2020</a>)</span></p>
 <div style="page-break-after: always;"></div>
 </section>
 </section>
-</section>
 <section id="methods" class="level1" data-number="3">
 <h1 data-number="3"><span class="header-section-number">3</span> Methods</h1>
 <p><em>Describe your methods. That should describe the data, the cleaning processes, and the analysis approaches. You might want to provide a shorter description here and all the details in the supplement.</em></p>
-<section id="data-description" class="level4" data-number="3.0.0.1">
-<h4 data-number="3.0.0.1" class="anchored" data-anchor-id="data-description"><span class="header-section-number">3.0.0.1</span> Data description:</h4>
-<p>The dataset includes information about individuals and their corresponding medical insurance costs. The dataset consist of key features such as age, sex, bmi, children, smoker, region and charges.</p>
-</section>
-<section id="data-cleaning-and-preprocessing" class="level4" data-number="3.0.0.2">
-<h4 data-number="3.0.0.2" class="anchored" data-anchor-id="data-cleaning-and-preprocessing"><span class="header-section-number">3.0.0.2</span> Data cleaning and preprocessing:</h4>
-<p>The data cleaning and preprocessing steps include:</p>
-<ol type="1">
-<li>Loading the data</li>
-<li>Converting categorical variables</li>
-<li>Checking for missing values</li>
-<li>Detecting outliers</li>
-</ol>
-</section>
-<section id="analysis-approaches" class="level4" data-number="3.0.0.3">
-<h4 data-number="3.0.0.3" class="anchored" data-anchor-id="analysis-approaches"><span class="header-section-number">3.0.0.3</span> Analysis Approaches:</h4>
-<ol type="1">
-<li>Explanatory Data Analysis: Create visualizations, examine and compare features.</li>
-<li>Model Building: Build perdictive models using linear regression to estimate <em>charges</em> based on other features.</li>
-</ol>
-</section>
 <section id="data-aquisition" class="level2" data-number="3.1">
 <h2 data-number="3.1" class="anchored" data-anchor-id="data-aquisition"><span class="header-section-number">3.1</span> Data aquisition</h2>
 <p><em>As applicable, explain where and how you got the data. If you directly import the data from an online source, you can combine this section with the next.</em></p>
@@ -322,51 +230,6 @@ div.csl-indent {
 <section id="data-import-and-cleaning" class="level2" data-number="3.2">
 <h2 data-number="3.2" class="anchored" data-anchor-id="data-import-and-cleaning"><span class="header-section-number">3.2</span> Data import and cleaning</h2>
 <p><em>Write code that reads in the file and cleans it so it’s ready for analysis. Since this will be fairly long code for most datasets, it might be a good idea to have it in one or several R scripts. If that is the case, explain here briefly what kind of cleaning/processing you do, and provide more details and well documented code somewhere (e.g.&nbsp;as supplement in a paper). All materials, including files that contain code, should be commented well so everyone can follow along.</em></p>
-<p>The dataset used in this analysis is sourced from Kaggle. The dataset was dowloaded directly from Kaggle website. It can be accessed at the following URL: <a href="https://www.kaggle.com/datasets/rahulvyasm/medical-insurance-cost-prediction">Medical Insurance Cost Prediction</a>.</p>
-<div class="cell">
-<div class="cell-output cell-output-stdout">
-<pre><code>'data.frame':   2772 obs. of  7 variables:
- $ age     : int  19 18 28 33 32 31 46 37 37 60 ...
- $ sex     : Factor w/ 2 levels "female","male": 1 2 2 2 2 1 1 1 2 1 ...
- $ bmi     : num  27.9 33.8 33 22.7 28.9 ...
- $ children: int  0 1 3 0 0 0 1 3 2 0 ...
- $ smoker  : Factor w/ 2 levels "no","yes": 2 1 1 1 1 1 1 1 1 1 ...
- $ region  : Factor w/ 4 levels "northeast","northwest",..: 4 3 3 2 2 3 3 2 1 2 ...
- $ charges : num  16885 1726 4449 21984 3867 ...</code></pre>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>   age    sex    bmi children smoker    region   charges
-1   19 female 27.900        0    yes southwest 16884.924
-2   18   male 33.770        1     no southeast  1725.552
-3   28   male 33.000        3     no southeast  4449.462
-4   33   male 22.705        0     no northwest 21984.471
-5   32   male 28.880        0     no northwest  3866.855
-6   31 female 25.740        0     no southeast  3756.622
-7   46 female 33.440        1     no southeast  8240.590
-8   37 female 27.740        3     no northwest  7281.506
-9   37   male 29.830        2     no northeast  6406.411
-10  60 female 25.840        0     no northwest 28923.137</code></pre>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>     age      sex      bmi children   smoker   region  charges 
-       0        0        0        0        0        0        0 </code></pre>
-</div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="starter-analysis-report_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="starter-analysis-report_files/figure-html/unnamed-chunk-2-2.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-</div>
-<div style="page-break-after: always;"></div>
 </section>
 <section id="statistical-analysis" class="level2" data-number="3.3">
 <h2 data-number="3.3" class="anchored" data-anchor-id="statistical-analysis"><span class="header-section-number">3.3</span> Statistical analysis</h2>
@@ -380,47 +243,6 @@ div.csl-indent {
 <h2 data-number="4.1" class="anchored" data-anchor-id="exploratorydescriptive-analysis"><span class="header-section-number">4.1</span> Exploratory/Descriptive analysis</h2>
 <p><em>Use a combination of text/tables/figures to explore and describe your data. Show the most important descriptive results here. Additional ones should go in the supplement. Even more can be in the R and Quarto files that are part of your project.</em></p>
 <p><a href="#tbl-summarytable" class="quarto-xref">Table&nbsp;1</a> shows a summary of the data.</p>
-<div class="cell">
-<div class="cell-output cell-output-stdout">
-<pre><code>      age            sex            bmi           children     smoker    
- Min.   :18.00   female:1366   Min.   :15.96   Min.   :0.000   no :2208  
- 1st Qu.:26.00   male  :1406   1st Qu.:26.22   1st Qu.:0.000   yes: 564  
- Median :39.00                 Median :30.45   Median :1.000             
- Mean   :39.11                 Mean   :30.70   Mean   :1.102             
- 3rd Qu.:51.00                 3rd Qu.:34.77   3rd Qu.:2.000             
- Max.   :64.00                 Max.   :53.13   Max.   :5.000             
-       region       charges     
- northeast:658   Min.   : 1122  
- northwest:664   1st Qu.: 4688  
- southeast:766   Median : 9333  
- southwest:684   Mean   :13261  
-                 3rd Qu.:16578  
-                 Max.   :63770  </code></pre>
-</div>
-</div>
-<p><strong>?@tbl-summarytable1</strong> shows a summary of the numerical features.</p>
-<div class="cell">
-<div class="cell-output cell-output-stdout">
-<pre><code>      age             bmi           children        charges     
- Min.   :18.00   Min.   :15.96   Min.   :0.000   Min.   : 1122  
- 1st Qu.:26.00   1st Qu.:26.22   1st Qu.:0.000   1st Qu.: 4688  
- Median :39.00   Median :30.45   Median :1.000   Median : 9333  
- Mean   :39.11   Mean   :30.70   Mean   :1.102   Mean   :13261  
- 3rd Qu.:51.00   3rd Qu.:34.77   3rd Qu.:2.000   3rd Qu.:16578  
- Max.   :64.00   Max.   :53.13   Max.   :5.000   Max.   :63770  </code></pre>
-</div>
-</div>
-<p><strong>?@tbl-summarytable2</strong> shows a summary of the categorical features.</p>
-<div class="cell">
-<div class="cell-output cell-output-stdout">
-<pre><code>     sex       smoker           region   
- female:1366   no :2208   northeast:658  
- male  :1406   yes: 564   northwest:664  
-                          southeast:766  
-                          southwest:684  </code></pre>
-</div>
-</div>
-<p><strong>?@tbl-summarytable3</strong> shows a summary of the data.</p>
 <p>Note the loading of the data providing a <strong>relative</strong> path using the <code>../../</code> notation. (Two dots means a folder up). You never want to specify an <strong>absolute</strong> path like <code>C:\ahandel\myproject\results\</code> because if you share this with someone, it won’t work for them since they don’t have that path. You can also use the <code>here</code> R package to create paths. See examples of that below. <strong>I recommend the <code>here</code> package, but I’m showing the other approach here just in case you encounter it.</strong></p>
 <div class="cell">
 <div id="tbl-summarytable" class="cell quarto-float quarto-figure quarto-figure-center anchored">
@@ -530,67 +352,7 @@ Table&nbsp;1: Data summary table.
 <section id="basic-statistical-analysis" class="level2" data-number="4.2">
 <h2 data-number="4.2" class="anchored" data-anchor-id="basic-statistical-analysis"><span class="header-section-number">4.2</span> Basic statistical analysis</h2>
 <p><em>To get some further insight into your data, if reasonable you could compute simple statistics (e.g.&nbsp;simple models with 1 predictor) to look for associations between your outcome(s) and each individual predictor variable. Though note that unless you pre-specified the outcome and main exposure, any “p&lt;0.05 means statistical significance” interpretation is not valid.</em></p>
-<p><strong>?@fig-charges</strong> shows histogram of insurance charges</p>
-<div class="cell">
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="starter-analysis-report_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-</div>
-<p><strong>?@fig-smoking</strong> shows box plot of insurance charges by smoking status</p>
-<div class="cell">
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="starter-analysis-report_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-</div>
-<p><strong>?@fig-region</strong> shows box plot of insurance charges by region</p>
-<div class="cell">
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="starter-analysis-report_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-</div>
-<p><strong>?@fig-age</strong> shows scatter plot of insurance charges by age</p>
-<div class="cell">
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="starter-analysis-report_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-</div>
-<p><strong>?@fig-bmi</strong> shows scatter plot of insurance by BMI</p>
-<div class="cell">
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="starter-analysis-report_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-</div>
-<p><strong>?@fig-children</strong> shows bar graph of average insurance charges by number of children</p>
-<div class="cell">
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="starter-analysis-report_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-</div>
-<p><a href="#fig-result" class="quarto-xref">Figure&nbsp;1</a> shows a scatter plot figure produced by one of the R scripts.</p>
+<p><a href="#fig-result" class="quarto-xref">Figure&nbsp;1</a> shows a scatterplot figure produced by one of the R scripts.</p>
 <div class="cell">
 <div class="cell-output-display">
 <div id="fig-result" class="quarto-float quarto-figure quarto-figure-center anchored">
