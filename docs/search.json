@@ -88,7 +88,7 @@
     "href": "starter-analysis-exercise/products/report/starter-analysis-report.html",
     "title": "Manuscript/Report Template for a Data Analysis Project",
     "section": "",
-    "text": "SAVANNA TORRES contributed to this exercise\nThe structure below is one possible setup for a data analysis project (including the course project). For a manuscript, adjust as needed. You don’t need to have exactly these sections, but the content covering those sections should be addressed.\nThis uses MS Word as output format. See here for more information. You can switch to other formats, like html or pdf. See the Quarto documentation for other formats."
+    "text": "Savanna Torres contributed to this exercise.\nThe structure below is one possible setup for a data analysis project (including the course project). For a manuscript, adjust as needed. You don’t need to have exactly these sections, but the content covering those sections should be addressed.\nThis uses MS Word as output format. See here for more information. You can switch to other formats, like html or pdf. See the Quarto documentation for other formats."
   },
   {
     "objectID": "starter-analysis-exercise/products/report/starter-analysis-report.html#general-background-information",
@@ -144,7 +144,7 @@
     "href": "starter-analysis-exercise/products/report/starter-analysis-report.html#basic-statistical-analysis",
     "title": "Manuscript/Report Template for a Data Analysis Project",
     "section": "4.2 Basic statistical analysis",
-    "text": "4.2 Basic statistical analysis\nTo get some further insight into your data, if reasonable you could compute simple statistics (e.g. simple models with 1 predictor) to look for associations between your outcome(s) and each individual predictor variable. Though note that unless you pre-specified the outcome and main exposure, any “p&lt;0.05 means statistical significance” interpretation is not valid.\nFigure 1 shows a scatterplot figure produced by one of the R scripts.\n\n\n\n\n\n\n\n\nFigure 1: Height and weight stratified by gender.\n\n\n\n\n\nFigure 2 shows a boxplot figure produced by one of the R scripts.\n\n\n\n\n\n\n\n\nFigure 2: Boxplot of Height by Eye Color.\n\n\n\n\n\nFigure 3 shows a scatterplot figure produced by one of the R scripts.\n\n\n\n\n\n\n\n\nFigure 3: Scatterplot of Weight vs. Waist Size."
+    "text": "4.2 Basic statistical analysis\nTo get some further insight into your data, if reasonable you could compute simple statistics (e.g. simple models with 1 predictor) to look for associations between your outcome(s) and each individual predictor variable. Though note that unless you pre-specified the outcome and main exposure, any “p&lt;0.05 means statistical significance” interpretation is not valid.\nFigure 1 shows a scatterplot figure produced by one of the R scripts.\n\n\n\n\n\n\n\n\nFigure 1: Height and weight stratified by gender.\n\n\n\n\n\nFigure 2 shows a boxplot figure produced by one of the R scripts.\n\n\n\n\n\n\n\n\nFigure 2: Boxplot of Height by Eye Color.\n\n\n\n\n\nFigure 3 shows a scatter figure produced by one of the R scripts.\n\n\n\n\n\n\n\n\nFigure 3: Scatterplot of Weight vs. Waist Size."
   },
   {
     "objectID": "starter-analysis-exercise/products/report/starter-analysis-report.html#full-analysis",
