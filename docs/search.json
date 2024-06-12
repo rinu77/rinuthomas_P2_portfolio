@@ -95,7 +95,7 @@
     "href": "starter-analysis-exercise/products/report/starter-analysis-report.html",
     "title": "Starter Analysis Report",
     "section": "",
-    "text": "SAVANNA TORRES contributed to this exercise.\nThe structure below is one possible setup for a data analysis project (including the course project). For a manuscript, adjust as needed. You don’t need to have exactly these sections, but the content covering those sections should be addressed.\nThis uses MS Word as output format. See here for more information. You can switch to other formats, like html or pdf. See the Quarto documentation for other formats."
+    "text": "Savanna Torres contributed to this exercise.\nThe structure below is one possible setup for a data analysis project (including the course project). For a manuscript, adjust as needed. You don’t need to have exactly these sections, but the content covering those sections should be addressed.\nThis uses MS Word as output format. See here for more information. You can switch to other formats, like html or pdf. See the Quarto documentation for other formats."
   },
   {
     "objectID": "starter-analysis-exercise/products/report/starter-analysis-report.html#general-background-information",
