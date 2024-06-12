@@ -24,7 +24,7 @@ website:
 
 format:
   html:
-    theme: cyborg
+    theme: morph
     highlight: zenburn
     css: styles.css
     toc: FALSE
