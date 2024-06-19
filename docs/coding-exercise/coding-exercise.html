@@ -195,7 +195,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="loading-and-checking-data" class="level2">
 <h2 class="anchored" data-anchor-id="loading-and-checking-data">Loading and checking data</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">#load necessary package</span></span>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">#load necessary packages</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"dslabs"</span>)</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"dplyr"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
@@ -569,6 +569,8 @@ Multiple R-squared:  0.4701,    Adjusted R-squared:  0.4593
 F-statistic: 43.48 on 1 and 49 DF,  p-value: 2.826e-08</code></pre>
 </div>
 </div>
+<p>Fit 1 Summary:</p>
+<p>The p-value is lower than the significance level of 0.05, which indicates a statistically significant negative correlation between infant mortality and life expectancy.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Fit a linear model with life expectancy as the outcome and population size as the predictor (log scale)</span></span>
 <span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>fit2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(life_expectancy <span class="sc">~</span> <span class="fu">log</span>(population), <span class="at">data =</span> africadata_2000)</span>
@@ -596,6 +598,8 @@ Multiple R-squared:  0.01044,   Adjusted R-squared:  -0.009755
 F-statistic: 0.517 on 1 and 49 DF,  p-value: 0.4755</code></pre>
 </div>
 </div>
+<p>Fit 2 Summary:</p>
+<p>The p-value is higher than the significance level of 0.05, which indicates taht there is no statistically significant correlation between population size (log scale) and life expectancy.</p>
 
 
 </section>

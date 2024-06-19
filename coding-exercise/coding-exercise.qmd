@@ -7,7 +7,7 @@ title: "R Coding Exercise"
 ## Loading and checking data
 
 ```{r}
-#load necessary package
+#load necessary packages
 library("dslabs")
 library("dplyr")
 library("ggplot2")
@@ -164,6 +164,10 @@ summary(fit1)
 
 ```
 
+Fit 1 Summary:
+
+The p-value is lower than the significance level of 0.05, which indicates a statistically significant negative correlation between infant mortality and life expectancy.
+
 ```{r}
 # Fit a linear model with life expectancy as the outcome and population size as the predictor (log scale)
 fit2 <- lm(life_expectancy ~ log(population), data = africadata_2000)
@@ -171,3 +175,7 @@ fit2 <- lm(life_expectancy ~ log(population), data = africadata_2000)
 # Display the summary of the second fit
 summary(fit2)
 ```
+
+Fit 2 Summary:
+
+The p-value is higher than the significance level of 0.05, which indicates taht there is no statistically significant correlation between population size (log scale) and life expectancy.
