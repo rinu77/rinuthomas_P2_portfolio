@@ -178,4 +178,68 @@ summary(fit2)
 
 Fit 2 Summary:
 
-The p-value is higher than the significance level of 0.05, which indicates taht there is no statistically significant correlation between population size (log scale) and life expectancy.
+The p-value is higher than the significance level of 0.05, which indicates that there is no statistically significant correlation between population size (log scale) and life expectancy.
+
+This section is contributed by SAVANNA TORRES
+## More data exploration
+
+```{r}
+#help file for us contagious diseases data
+help("us_contagious_diseases")
+```
+
+```{r}
+#get an overview of data structure
+str(us_contagious_diseases)
+```
+
+```{r}
+#get a summary of data
+summary(us_contagious_diseases)
+```
+
+```{r}
+#determine the type of object us contagious diseases is
+class(us_contagious_diseases)
+```
+
+## Processing Hepatitis A Data
+
+```{r}
+# Assigning only Hepatitis A to a new object/variable called Hepatitis_A_data
+Hepatitis_A_data <- us_contagious_diseases %>% filter(disease == "Hepatitis A")
+```
+
+```{r}
+#get an overview of Hepatitis A data
+str(Hepatitis_A_data)
+```
+
+```{r}
+# Summary of the new object Hepatitis_A_data
+summary(Hepatitis_A_data)
+```
+
+## Plots for Hepatitis A
+```{r}
+# Creating the plot for count as a function of infant mortality for the year 2000
+ggplot(data = Hepatitis_A_data, aes(x = population, y = count)) +
+  geom_point() +
+  labs(title = "Hepatitis A Cases vs Population",
+       x = "population",
+       y = "count") +
+  theme_minimal()
+```
+
+## Simple fit model
+
+```{r}
+# Fit a linear model with life expectancy as the outcome and infant mortality as the predictor
+hepA_lm <- lm(count ~ population, data = Hepatitis_A_data)
+
+# Display the summary of the first fit
+summary(hepA_lm)
+```
+
+Observation:
+We see that population is highly statistically significant and can conclude that it is a strong predictor of the number of Hepatitis A cases. Based off of the R-square value of 0.3028, we can say about 30.28% of the variability in the number of Hepatitis A cases can be explained by the population.
