@@ -180,8 +180,7 @@ Fit 2 Summary:
 
 The p-value is higher than the significance level of 0.05, which indicates that there is no statistically significant correlation between population size (log scale) and life expectancy.
 
-This section is contributed by SAVANNA TORRES
-## More data exploration
+This section is contributed by SAVANNA TORRES \## More data exploration
 
 ```{r}
 #help file for us contagious diseases data
@@ -221,6 +220,7 @@ summary(Hepatitis_A_data)
 ```
 
 ## Plots for Hepatitis A
+
 ```{r}
 # Creating the plot for count as a function of infant mortality for the year 2000
 ggplot(data = Hepatitis_A_data, aes(x = population, y = count)) +
@@ -241,5 +241,4 @@ hepA_lm <- lm(count ~ population, data = Hepatitis_A_data)
 summary(hepA_lm)
 ```
 
-Observation:
-We see that population is highly statistically significant and can conclude that it is a strong predictor of the number of Hepatitis A cases. Based off of the R-square value of 0.3028, we can say about 30.28% of the variability in the number of Hepatitis A cases can be explained by the population.
+Observation: We see that population is highly statistically significant and can conclude that it is a strong predictor of the number of Hepatitis A cases. Based off of the R-square value of 0.3028, we can say about 30.28% of the variability in the number of Hepatitis A cases can be explained by the population.
