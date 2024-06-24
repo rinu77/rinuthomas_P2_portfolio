@@ -95,8 +95,8 @@ knitr::kable(resulttable)
 #| label: tbl-resulttable
 #| tbl-cap: "Linear Model Fit"
 #| echo: FALSE
-resulttable=readRDS("../../results/tables-files/resulttable3.rds")
-knitr::kable(resulttable)
+resulttable3=readRDS("../../results/tables-files/resulttable3.rds")
+knitr::kable(resulttable3)
 ```
 
 ## Basic statistical analysis
