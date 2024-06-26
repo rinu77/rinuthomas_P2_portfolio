@@ -1,0 +1,196 @@
+---
+title: "Assignment #4: Data Exercise"
+---
+
+# Data Generation:
+
+## Creating a Synthetic Data:
+
+```{r}
+# Load necessary libraries
+library(dplyr)
+library(ggplot2)
+library(corrplot)
+
+# Set seed for reproducibility
+set.seed(456)
+
+# Define the number of samples
+n <- 1000
+# Generate independent variables
+education_years <- rnorm(n, mean = 16, sd = 2)  # Years of education
+income <- rnorm(n, mean = 50000, sd = 15000)    # Annual income
+hours_worked_per_week <- rnorm(n, mean = 40, sd = 5) # Hours worked per week
+
+# Generate dependent variables with associations
+# Job satisfaction influenced by income and hours worked
+job_satisfaction <- 3 + 0.0001 * income - 0.02 * hours_worked_per_week + rnorm(n, mean = 0, sd = 1)
+
+# Physical activity level influenced by hours worked and education years
+physical_activity_level <- 10 - 0.1 * hours_worked_per_week + 0.2 * education_years + rnorm(n, mean = 0, sd = 2)
+
+# Create a data frame
+synthetic_data <- data.frame(
+  EducationYears = education_years,
+  Income = income,
+  HoursWorkedPerWeek = hours_worked_per_week,
+  JobSatisfaction = job_satisfaction,
+  PhysicalActivityLevel = physical_activity_level
+)
+
+```
+
+# Data Exploration:
+
+## Display and explore the dataset structure and summary:
+
+```{r}
+# Display the first few rows of the dataset
+head(synthetic_data)
+
+# Explore the data: structure and summary
+str(synthetic_data)
+summary(synthetic_data)
+```
+
+### Let's visualize the data:
+
+#### First let's look at a few histograms of independent variables
+
+```{r}
+# Histograms of Education years
+ggplot(synthetic_data, aes(x = EducationYears)) + 
+  geom_histogram(binwidth = 1, fill = "blue", color = "black") +
+  labs(title = "Histogram of Education Years", x = "Years of Education", y = "Frequency")
+```
+
+**Observations:** The histogram shows a bell-shaped curve which suggests that the Education Years variable is normally distributed. The peak of the histogram is centered around 16 years of education. Most of the data points falls between 12 and 20 years of education. Since, the histogram appears to be fairly symmetric, there are no significant skewness or outliers in the data.
+
+```{r}
+#Histogram of Income
+ggplot(synthetic_data, aes(x = Income)) + 
+  geom_histogram(binwidth = 5000, fill = "green", color = "black") +
+  labs(title = "Histogram of Income", x = "Annual Income ($)", y = "Frequency")
+
+```
+
+**Observations:** The histogram shows a bell-shaped curve which suggests that the Income variable is normally distributed. The peak of the histogram is centered around 50,000 Annual Income. Most of the data points falls between 20000 and 80000 annual income. Since, the histogram appears to be fairly symmetric, there are no significant skewness or outliers in the data.
+
+```{r}
+# Histogram of Hours Worked Per Week"
+ggplot(synthetic_data, aes(x = HoursWorkedPerWeek)) + 
+  geom_histogram(binwidth = 2, fill = "red", color = "black") +
+  labs(title = "Histogram of Hours Worked Per Week", x = "Hours Worked Per Week", y = "Frequency")
+
+```
+
+**Observations:** The histogram shows a bell-shaped curve which suggests that the Hours worked per week variable is normally distributed. The peak of the histogram is centered around 40 hours per week. Most of the data points falls between 30 and 50 hours per week. Since, the histogram appears to be fairly symmetric, there are no significant skewness or outliers in the data.
+
+#### Now, let's look at a few scatter plots to explore relationships between variables:
+
+```{r}
+ggplot(synthetic_data, aes(x = Income, y = JobSatisfaction)) +
+  geom_point(color = "blue") +
+  geom_smooth(method = "lm", color = "black") +
+  labs(title = "Scatter Plot of Job Satisfaction vs Income", x = "Income ($)", y = "Job Satisfaction")
+
+```
+
+**Observations:** The scatter plot shows a positive linear relationship between job satisfaction and income. As income increases, job satisfaction tends to increase as well, which is also indicated by the upward sloping trend line.
+
+```{r}
+ggplot(synthetic_data, aes(x = HoursWorkedPerWeek, y = JobSatisfaction)) +
+  geom_point(color = "green") +
+  geom_smooth(method = "lm", color = "black") +
+  labs(title = "Scatter Plot of Job Satisfaction vs Hours Worked Per Week", x = "Hours Worked Per Week", y = "Job Satisfaction")
+
+```
+
+**Observations:** The scatter plot shows a negative linear relationship between job satisfaction and hours worked per hour. As the number of hours worked per hour increases, job satisfaction tends to slightly decrease, which is also indicated by the downward sloping trend line.
+
+```{r}
+ggplot(synthetic_data, aes(x = EducationYears, y = PhysicalActivityLevel)) +
+  geom_point(color = "red") +
+  geom_smooth(method = "lm", color = "black") +
+  labs(title = "Scatter Plot of Physical Activity Level vs Education Years", x = "Years of Education", y = "Physical Activity Level")
+
+```
+
+**Observations:** The scatter plot shows a positive linear relationship between physical activity level and years of education. As the number of education years increases, the physical activity tends to increase as well, which is also indicated by the upward sloping trend line.
+
+```{r}
+ggplot(synthetic_data, aes(x = HoursWorkedPerWeek, y = PhysicalActivityLevel)) +
+  geom_point(color = "purple") +
+  geom_smooth(method = "lm", color = "black") +
+  labs(title = "Scatter Plot of Physical Activity Level vs Hours Worked Per Week", x = "Hours Worked Per Week", y = "Physical Activity Level")
+
+```
+
+**Observations:** The scatter plot shows a negative linear relationship between physical activity level and hours worked per hour. As the number of hours worked per hour increases, physical activity tends to slightly decrease, which is also indicated by the downward sloping trend line.
+
+**Finally, let's look at a visual summary of the relationships between the variables:**
+
+```{r}
+# Correlation matrix
+correlation_matrix <- synthetic_data %>%
+  select(EducationYears, Income, HoursWorkedPerWeek, JobSatisfaction, PhysicalActivityLevel) %>%
+  cor()
+
+print(correlation_matrix)
+```
+
+```{r}
+# Visualize the correlation matrix
+corrplot(correlation_matrix, method = "circle")
+```
+
+**How to interpret the correlation matrix:**
+
+1.  Darker and larger circles indicate stronger correlations while light and smaller circles indicate weaker correlations.
+
+2.  The correlation range from -1 to 1 where 1 indicated positive correlation and -1 indicates a negative correlation.
+
+**Based on the above methods of interpretation following are the observations:**
+
+1.  There is moderate positive correlation between education years and income. Higher education levels tends to associate with higher income.
+
+2.  There is moderate positive correlation between income and job satisfaction. Higher incomes tends to associate with higher job satisfaction.
+
+3.  There is a slight negative correlation between hours worked per week and job satisfaction. As the number of hours worked increases, job satisfaction tends to decrease slightly.
+
+4.  There is a slight positive correlation between education years and physical activity level. More years of education are associated with higher physical activity levels.
+
+5.  There is a slight negative correlation between hours worked per week and physical activity level. More hours worked per week are associated with lower physical activity levels.
+
+# Model Fitting:
+
+## Let's create a model to predict Job Satisfaction:
+
+```{r}
+# Fit a linear model to predict Job Satisfaction based on Income and Hours Worked
+model1 <- lm(JobSatisfaction ~ Income + HoursWorkedPerWeek, data = synthetic_data)
+summary(model1)
+```
+
+**Observations:** Both income and hours worked per hour significantly influence job satisfaction as their p-values are less than 0.001. 69.81% of the variance in job satisfaction is explained by the model.
+
+## Let's create a model to predict Physical Activity Level:
+
+```{r}
+# Fit a linear model to predict Physical Activity Level based on Education Years and Hours Worked
+model2 <- lm(PhysicalActivityLevel ~ EducationYears + HoursWorkedPerWeek, data = synthetic_data)
+summary(model2)
+```
+
+**Observations:** Both education years and hours worked per hour significantly influence physical activity as their p-values are less than 0.001. However, only 8.3% of the variance in physical activity is explained by the model, suggesting that there are other factors not included in the model that influence physical activity.
+
+# Compare Models:
+
+## Finally let's compare Model 1 and Model 2:
+
+```{r}
+# Compare models using AIC (Akaike Information Criterion)
+AIC(model1, model2)
+```
+
+**Observations:** Model 1 has a significantly lower AIC value compared to Model 2. hence based on the AIC values, Model 1 is preferred over Model 2 for explaining variation in the respective dependent variables.
