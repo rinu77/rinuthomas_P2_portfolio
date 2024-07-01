@@ -1,0 +1,187 @@
+---
+title: "Assignment #5: CDC Data Exercise"
+editor: visual
+---
+
+# About the Dataset from CDC's data website:
+
+**Dataset Name:** **NCHS - Death Rates and Life Expectancy at Birth**
+
+This dataset provides an annual data on death rates and life expectancy at birth in the United States, offering key indicator for public health analysis.
+
+**Key variables:**
+
+**Year:** The specific year of the data
+
+**Race:** Black or White
+
+**Sex:** Male or Female
+
+**Average Life Expectancy (Years):** The average number of years a newborn is expected to live.
+
+**Age-adjusted Death Rate:** The number of deaths per 100,000 population.
+
+# Data Loading:
+
+## Load necessary packages
+
+```{r}
+# Load necessary packages
+library (here)
+library(readr)
+library(dplyr)
+library(ggplot2)
+```
+
+## Read and Load the dataset
+
+```{r}
+# Define data location using here() package
+data_location = here::here("cdcdata-exercise","NCHS_-_Death_rates_and_life_expectancy_at_birth.csv")
+
+# Load Data
+cdc_data = read_csv(data_location)
+head(cdc_data)
+str(cdc_data)
+# View the column names
+print(colnames(cdc_data))
+```
+
+## Renamed the columns
+
+**The column names were too long so in order to make referencing the column name while coding I renamed two columns as shown in the code below**
+
+```{r}
+ # Rename columns to avoid issues with spaces or special characters
+cdc_data = cdc_data %>%
+  rename(
+    DeathRate = `Age-adjusted Death Rate`,
+    LifeExpectancy = `Average Life Expectancy (Years)`
+  )
+```
+
+## Filter the Data
+
+**The dataset had information from 1900 to 2018. Hence, I chose years 1993 through 2018.**
+
+```{r}
+# Filter the data
+filtered_cdc_data <- cdc_data %>%
+  filter(Year >= 1993 & Year <= 2018, 
+         Race %in% c("Black", "White"), 
+         Sex %in% c("Male", "Female"))
+
+
+# DIsplay Structure of the filtered data
+str(filtered_cdc_data)
+```
+
+**There were a few columns with missing values, those were removed as shown below**
+
+```{r}
+# Remove rows with missing values
+cleaned_cdc_data = filtered_cdc_data %>%
+  na.omit()
+
+str(cleaned_cdc_data)
+
+```
+
+# Summarize cleaned data
+
+**Summarized the cleaned data to see mean and median for the numerical variables.**
+
+```{r}
+# Let's summarize the data
+summary(cleaned_cdc_data)
+```
+
+**Analysis:**
+
+**Life Expectancy:** The distribution of life expectancy values is relatively symmetric, with the mean and median being very close.
+
+**Death Rate:** The distribution of death rates is slightly skewed to the right, as indicated by the mean being higher than the median.
+
+## Summarize character variables:
+
+**First let's summarize race**
+
+```{r}
+# Summary statistics for Race
+race_summary = cleaned_cdc_data %>%
+  group_by(Race) %>%
+  summarise(count = n()) %>%
+  mutate(percentage = (count / sum(count)) * 100)
+
+print(race_summary)
+```
+
+**then let's summarize sex**
+
+```{r}
+# Summary statistics for Sex
+sex_summary = cleaned_cdc_data %>%
+  group_by(Sex) %>%
+  summarise(count = n()) %>%
+  mutate(percentage = (count / sum(count)) * 100)
+
+print(sex_summary)
+
+```
+
+# Visualizations
+
+**Distribution of DeathRate**
+
+```{r}
+# Distribution of Death Rate
+p1 = ggplot(cleaned_cdc_data, aes(x = DeathRate)) +
+  geom_histogram(binwidth = 1, fill = "blue", color = "black") +
+  labs(title = "Distribution of Death Rate", x = "Death Rate", y = "Frequency")
+
+print(p1)
+```
+
+**Observation:** The distribution appears to be highly varied and does not follow a typical bell-curve shape. The histogram shows many individual bars, indicating a wide spread of death rates with many unique values. The death rates range from approximately 500 to over 1500. The graph indicates that the death rates in the dataset are highly variable and spread across a wide range of values.
+
+**Distribution of Life Expectancy**
+
+```{r}
+# Distribution of Life Expectancy
+p2 = ggplot(cleaned_cdc_data, aes(x = LifeExpectancy)) +
+  geom_histogram(binwidth = 1, fill = "green", color = "black") +
+  labs(title = "Distribution of Life Expectancy", x = "Life Expectancy", y = "Frequency")
+
+print(p2)
+
+```
+
+**Observation:** The distribution of life expectancy is not perfectly normal (bell-shaped). Instead, it shows multiple peaks. Life expectancy values range from approximately 65 to 80 years. The graph shows that most of the individuals in the dataset have life expectancies around 75 and 80 years, with fewer individuals having life expectancies in the lower 70s and upper 60s.
+
+**Race distribution**
+
+```{r}
+# Race distribution
+p3 = ggplot(race_summary, aes(x = Race, y = percentage, fill = Race)) +
+  geom_bar(stat = "identity") +
+  labs(title = "Race Distribution", x = "Race", y = "Percentage")
+
+print(p3)
+
+```
+
+**Observation:** The bar plot shows that the dataset is almost evenly split between Black and White individuals, each constituting about half of the total dataset. This balanced distribution is beneficial for analyses that compare these racial groups, as it minimizes the risk of bias due to unequal representation.
+
+**Sex distribution**
+
+```{r}
+# Sex distribution
+p4 = ggplot(sex_summary, aes(x = Sex, y = percentage, fill = Sex)) +
+  geom_bar(stat = "identity") +
+  labs(title = "Sex Distribution", x = "Sex", y = "Percentage")
+
+print(p4)
+
+```
+
+**Observation:** The bar plot shows that the dataset is almost evenly split between females and males, each constituting about half of the total dataset. This balanced distribution is beneficial for analyses that compare these gender groups, as it minimizes the risk of bias due to unequal representation.
