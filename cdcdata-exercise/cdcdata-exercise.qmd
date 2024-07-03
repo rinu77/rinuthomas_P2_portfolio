@@ -185,3 +185,141 @@ print(p4)
 ```
 
 **Observation:** The bar plot shows that the dataset is almost evenly split between females and males, each constituting about half of the total dataset. This balanced distribution is beneficial for analyses that compare these gender groups, as it minimizes the risk of bias due to unequal representation.
+
+# **This section is contributed by Savanna Torres.**
+
+I utilized ChatGPT to produce the synthetic data set. This is the prompt I used:
+
+Produce a synthetic data set similar to this with both Black and White randomly for Race and Male and Female randomly for Sex:
+
+tibble \[100 × 5\] (S3: tbl_df/tbl/data.frame)
+\$ Year : num \[1:100\] 1993 1994 1995 1996 1997 ...
+\$ Race : chr \[1:100\] "Black" "Black" "Black" "Black" ...
+\$ Sex : chr \[1:100\] "Female" "Female" "Female" "Female" ...
+\$ LifeExpectancy: num \[1:100\] 73.7 73.9 73.9 74.2 74.7 74.8 74.7 75.1 75.3 75.4 ...
+\$ DeathRate : num \[1:100\] 969 954 956 940 922 ...
+ - attr(\*, "na.action")= 'omit' Named int \[1:4\] 26 52 78 104
+..- attr(\*, "names")= chr \[1:4\] "26" "52" "78" "104"
+
+**Load libraries**
+
+```{r}
+# Load necessary libraries
+library(tibble)
+library(dplyr)
+```
+
+**Generate synthetic data:**
+
+```{r}
+# Set seed for reproducibility
+set.seed(123)
+
+# Generate data
+Year <- 1993:2092  # 100 years
+Race <- sample(c("Black", "White"), 100, replace = TRUE)
+Sex <- sample(c("Female", "Male"), 100, replace = TRUE)
+LifeExpectancy <- round(rnorm(100, mean = 75, sd = 2), 1)  # Normal distribution with mean 75 and sd 2
+DeathRate <- round(rnorm(100, mean = 950, sd = 30), 0)  # Normal distribution with mean 950 and sd 30
+
+# Combine into a tibble
+synthetic_data <- tibble(
+  Year = Year,
+  Race = Race,
+  Sex = Sex,
+  LifeExpectancy = LifeExpectancy,
+  DeathRate = DeathRate
+)
+```
+
+**View synthetic data:**
+
+```{r}
+print(synthetic_data)
+```
+
+**Summarizing the synthetic data set:**
+
+```{r}
+summary(synthetic_data)
+```
+
+Beginning with the summary of the synthetic data we find that the minimum Life Expectancy is higher at 70.90 as opposed to the minimum Life Expectancy of 64.60 with the cleaned data set. As for the Max Life Expectancy with the synthetic data we have a slightly higher value of 81.50 while the cleaned data set's Max Life Expectancy is at 81.40.
+
+**Summarizing character variable Sex:**
+
+```{r}
+# Summary statistics for Race
+race_summary_syn = synthetic_data %>%
+  group_by(Race) %>%
+  summarise(count = n()) %>%
+  mutate(percentage = (count / sum(count)) * 100)
+
+print(race_summary_syn)
+```
+
+The summary stats for Race with the synthetic data set are randomized here as opposed to the clean data set where it was split down the line at 50/50.
+
+```{r}
+# Summary statistics for Sex
+sex_summary_syn = synthetic_data %>%
+  group_by(Sex) %>%
+  summarise(count = n()) %>%
+  mutate(percentage = (count / sum(count)) * 100)
+
+print(sex_summary_syn)
+```
+
+Again with the summary stats for Sex using the synthetic data set we have a randomized percentage for both male and female while the cleaned data set was split down the line at 50/50.
+
+**Distribution of Death Rate Visualization**
+
+```{r}
+# Distribution of Death Rate
+p1_syn = ggplot(synthetic_data, aes(x = DeathRate)) +
+  geom_histogram(binwidth = 1, fill = "blue", color = "black") +
+  labs(title = "Distribution of Death Rate", x = "Death Rate", y = "Frequency")
+
+print(p1_syn)
+```
+
+The distribution of Death Rate with the synthetic data takes more of a bell-shaped curve than the cleaned data which showed to be right skewed.
+
+**Distribution of Life Expectancy visualization**
+
+```{r}
+# Distribution of Life Expectancy
+p2_syn = ggplot(synthetic_data, aes(x = LifeExpectancy)) +
+  geom_histogram(binwidth = 1, fill = "green", color = "black") +
+  labs(title = "Distribution of Life Expectancy", x = "Life Expectancy", y = "Frequency")
+
+print(p2_syn)
+```
+
+The distribution of Life Expectancy using the synthetic data is also more close to a bell curve shape while the cleaned data took more of a left skewed shape.
+
+**Race distribution visualization**
+
+```{r}
+# Race distribution
+p3_syn = ggplot(race_summary_syn, aes(x = Race, y = percentage, fill = Race)) +
+  geom_bar(stat = "identity") +
+  labs(title = "Race Distribution", x = "Race", y = "Percentage")
+
+print(p3_syn)
+```
+
+We can see here visually that the synthetic data randomly distributed the percentage between race.
+
+**Sex distribution visualization**
+
+```{r}
+# Sex distribution
+p4_syn = ggplot(sex_summary_syn, aes(x = Sex, y = percentage, fill = Sex)) +
+  geom_bar(stat = "identity") +
+  labs(title = "Sex Distribution", x = "Sex", y = "Percentage")
+
+print(p4_syn)
+```
+
+Also seen here is the random distribution of the percentage between sex.
