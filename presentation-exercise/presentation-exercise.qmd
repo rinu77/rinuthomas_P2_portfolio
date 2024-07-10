@@ -2,13 +2,89 @@
 title: "Presentation Exercise"
 ---
 
-Placeholder file for the future data/results presentation exercise.
+# **INTRODUCTION**
+
+For this exercise, I am using a chart and dataset that I found while exploring Gapminder. The chart and dataset shows how the number of babies per women has dropped across the world over the years. The chart and dataset that I will be using can be found at this [link](https://www.gapminder.org/topics/babies-per-woman/).
+
+# **RECREATING CHART**
+
+## **SCREENSHOT OF THE CHART BEING RECREATED:**
+
+![](https://github.com/rinu77/rinuthomas_P2_portfolio/raw/main/presentation-exercise/original_graph.png){width="600"}
+
+## **STEPS TAKEN TO RECREATE THE CHART USING CHATGPT:**
+
+For the purpose of the exercise I used CHATGPT.
+
+I first provided CHATGPT with the dataset and the screenshot of the chart. Then asked the following question:
+
+*“Using the dataset can you recreate the graph in the screenshot using R code?*
+
 ```{r}
 # Load necessary libraries
 library(ggplot2)
 library(dplyr)
 library(here)
 library(readr)
+
+# Define data location using here() package
+data_location = here::here("presentation-exercise","babies_per_women.csv")
+
+# Load Data
+data = read_csv(data_location)
+str(data)
+
+
+# Create the plot
+ggplot(data, aes(x = time, y = Babies_per_woman)) +
+  geom_line(size = 2) +
+  geom_point(data = filter(data, time == 1800), size = 5) +
+  geom_text(aes(x = 1800, y = 5.8, label = "1800"), vjust = -1) +
+  geom_text(aes(x = 1965, y = 5, label = "1965\n5 births"), vjust = -1) +
+  geom_text(aes(x = 2017, y = 2.5, label = "2017\n2.5 births"), vjust = -1) +
+  annotate("segment", x = 2017, xend = 2060, y = 2.5, yend = 2.0, linetype = "dashed", arrow = arrow(length = unit(0.3, "cm"))) +
+  labs(title = "AVERAGE NUMBER OF BABIES PER WOMAN FROM 1800 TO TODAY",
+       x = "", y = "") +
+  theme_minimal(base_size = 15) +
+  theme(axis.text = element_text(size = 12),
+        plot.title = element_text(hjust = 0.5, face = "bold"))
+
+# Save the plot
+ggsave("average_number_of_babies_per_woman.png", width = 10, height = 6)
+
+```
+
+The initial code provided by CHATGPT required a few fixes to make the chart look same as the original chart. The fixes included:
+
+-   Fixing the tail end to have dotted line.
+
+-   Adding a circle at the point where it says “1965 5 Births”.
+
+-   Adjusting the size of the chart to make it more visible.
+
+## **PROMPTS TO FIX:**
+
+I used multiple prompts to fix and produce the final chart.
+
+The prompts included:
+
+*“Can you remove the solid line at the tail end and make it a dashed line to make it look similar to the screenshot provided?”*
+
+*“Add a circle at point where it says”1965 5 births”*
+
+*“Can you adjust the size of the chart to make more the contents more visible?”*
+
+Finally, to fix few a alignment issues I made some changes to the final code.
+
+## **FINAL CODE FROM CHATGPT AND FINAL CHART**
+
+```{r}
+# Load necessary libraries
+library(ggplot2)
+library(dplyr)
+library(here)
+library(readr)
+
 # Define data location using here() package
 data_location = here::here("presentation-exercise","babies_per_women.csv")
 
@@ -46,6 +122,18 @@ ggplot() +
 ggsave("average_number_of_babies_per_woman_final.png", width = 8, height = 5)
 ```
 
+# **CREATING PUBLICATION QUALITY TABLE**
+
+I provided CHATGPT with the following prompts to create the table:
+
+*“Utilizing the dataset provided create a professional looking table using R code”*
+
+*“Only include columns Year and Babies per women”*
+
+*“Make the table to display averages of every 10 years”*
+
+## **FINAL CODE FROM CHATGPT AND FINAL TABLE**
+
 ```{r}
 # Load necessary libraries
 library(readr)
@@ -77,4 +165,3 @@ data_decade %>%
   add_header_above(c("Average Number of Babies per Woman by Decade" = 2), bold = TRUE, align = "c", color = "black", background = "lightgray")
 
 ```
-
