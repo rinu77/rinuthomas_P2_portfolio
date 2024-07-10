@@ -3,3 +3,78 @@ title: "Presentation Exercise"
 ---
 
 Placeholder file for the future data/results presentation exercise.
+```{r}
+# Load necessary libraries
+library(ggplot2)
+library(dplyr)
+library(here)
+library(readr)
+# Define data location using here() package
+data_location = here::here("presentation-exercise","babies_per_women.csv")
+
+# Load Data
+data = read_csv(data_location)
+str(data)
+
+# Separate the actual and projected data
+actual_data <- filter(data, time <= 2017)
+projection <- data.frame(time = c(2017, 2100), `Babies_per_woman` = c(2.5, 2.0))
+
+# Create the plot
+ggplot() +
+  geom_smooth(data = actual_data, aes(x = time, y = `Babies_per_woman`), method = "loess", span = 0.2, size = 2, color = "black", se = FALSE) +
+  geom_line(data = projection, aes(x = time, y = `Babies_per_woman`), linetype = "dashed", size = 1, color = "black") +
+  geom_point(data = filter(data, time == 1800), aes(x = time, y = `Babies_per_woman`), size = 6, color = "black") +
+  geom_text(data = filter(data, time == 1800), aes(x = time, y = `Babies_per_woman`, label = "1800"), vjust = -1.5, size = 4, fontface = "bold") +
+  geom_text(aes(x = 1965, y = 5, label = "1965\n5 births"), vjust = -1.25, size = 4, fontface = "bold") +
+  geom_text(aes(x = 2017, y = 2.5, label = "2017\n2.5 births"), vjust = -1, size = 4, fontface = "bold") +
+  annotate("segment", x = 2017, xend = 2100, y = 2.5, yend = 2.0, linetype = "dashed", size = 1, color = "black", arrow = arrow(length = unit(0.2, "cm"))) +
+  annotate("point", x = 1965, y = 5, color = "black", size = 10, shape = 21, fill = NA) +
+  annotate("segment", x = max(actual_data$time), xend = max(actual_data$time) + 1, y = tail(actual_data$`Babies_per_woman`, 1), yend = tail(actual_data$`Babies per woman`, 1), color = "black", size = 2, arrow = arrow(length = unit(0.3, "cm"))) +
+  scale_y_continuous(limits = c(2, 6), breaks = seq(2, 6, by = 1)) +
+  labs(title = "AVERAGE NUMBER OF BABIES PER WOMAN FROM 1800 TO TODAY",
+       x = NULL, y = NULL) +
+  theme_minimal(base_size = 12) +
+  theme(plot.title = element_text(size = 14, face = "bold", hjust = 0.5),
+        axis.text = element_text(size = 10),
+        axis.title.x = element_blank(),
+        axis.title.y = element_blank(),
+        panel.grid.major = element_line(color = "grey90"),
+        panel.grid.minor = element_blank())
+
+# Save the plot with reduced size
+ggsave("average_number_of_babies_per_woman_final.png", width = 8, height = 5)
+```
+
+```{r}
+# Load necessary libraries
+library(readr)
+library(dplyr)
+library(knitr)
+library(kableExtra)
+
+# Define data location using here() package
+data_location = here::here("presentation-exercise","babies_per_women.csv")
+
+# Load Data
+data = read_csv(data_location)
+str(data)
+
+# Group by decade and calculate the average number of babies per woman
+data_decade <- data %>%
+  mutate(Decade = (time %/% 10) * 10) %>%
+  group_by(Decade) %>%
+  summarise(`Average Babies per Woman` = mean(`Babies_per_woman`, na.rm = TRUE)) %>%
+  ungroup()
+
+# Create a professional-looking table with a centered, bold heading
+data_decade %>%
+  kable("html", col.names = c("Decade", "Average Babies per Woman"), align = 'c') %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive", "bordered"), full_width = F) %>%
+  column_spec(1, bold = T, color = "white", background = "dodgerblue") %>%
+  column_spec(2, bold = T) %>%
+  row_spec(0, bold = T, background = "darkblue", color = "white") %>%
+  add_header_above(c("Average Number of Babies per Woman by Decade" = 2), bold = TRUE, align = "c", color = "black", background = "lightgray")
+
+```
+
