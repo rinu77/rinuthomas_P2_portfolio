@@ -325,8 +325,15 @@
     "objectID": "tidytuesday-exercise/tidytuesday-exercise.html#findings",
     "href": "tidytuesday-exercise/tidytuesday-exercise.html#findings",
     "title": "Tidy Tuesday Exercise",
-    "section": "Findings:",
-    "text": "Findings:\n\nHypothesis that episodes with higher ‘18-49 Rating Share’ would have higher ‘Viewers in Millions’ was supported by the analysis.\nThe Random Forest model demonstrated strong predictive performance, explaining about 96.18% of the variance in viewership.\nThe final model’s residuals were well-distributed, confirming its robustness and reliability.\n\n\nConclusion\nThis analysis successfully identified and validated the relationship between ‘18-49 Rating Share’ and ‘Viewers in Millions’ for TV show episodes. The Random Forest model was chosen as the best predictive model, demonstrating high accuracy and robustness. This process highlighted the importance of thorough data exploration, appropriate model selection, and rigorous evaluation to derive meaningful insights from data."
+    "section": "Findings",
+    "text": "Findings\n\nHypothesis that episodes with higher ‘18-49 Rating Share’ would have higher ‘Viewers in Millions’ was supported by the analysis.\nThe Random Forest model demonstrated strong predictive performance, explaining about 96.18% of the variance in viewership.\nThe final model’s residuals were well-distributed, confirming its robustness and reliability."
+  },
+  {
+    "objectID": "tidytuesday-exercise/tidytuesday-exercise.html#conclusion",
+    "href": "tidytuesday-exercise/tidytuesday-exercise.html#conclusion",
+    "title": "Tidy Tuesday Exercise",
+    "section": "Conclusion",
+    "text": "Conclusion\nThis analysis successfully identified and validated the relationship between ‘18-49 Rating Share’ and ‘Viewers in Millions’ for TV show episodes. The Random Forest model was chosen as the best predictive model, demonstrating high accuracy and robustness. This process highlighted the importance of thorough data exploration, appropriate model selection, and rigorous evaluation to derive meaningful insights from data."
   },
   {
     "objectID": "index.html",

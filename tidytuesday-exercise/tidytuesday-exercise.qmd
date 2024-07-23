@@ -1,5 +1,7 @@
 ---
 title: "Tidy Tuesday Exercise"
+author: Rinu Thomas
+date: today
 ---
 
 # Introduction
@@ -410,7 +412,7 @@ To ensure an honest assessment, we evaluated the Random Forest model on the test
 
 -   **Residual Analysis:** The residuals were evenly distributed around zero, indicating a well-fitted model without significant bias.
 
-## **Findings:**
+## Findings
 
 -   Hypothesis that episodes with higher '18-49 Rating Share' would have higher 'Viewers in Millions' was supported by the analysis.
 
@@ -418,6 +420,6 @@ To ensure an honest assessment, we evaluated the Random Forest model on the test
 
 -   The final model's residuals were well-distributed, confirming its robustness and reliability.
 
-### Conclusion
+## Conclusion
 
 This analysis successfully identified and validated the relationship between '18-49 Rating Share' and 'Viewers in Millions' for TV show episodes. The Random Forest model was chosen as the best predictive model, demonstrating high accuracy and robustness. This process highlighted the importance of thorough data exploration, appropriate model selection, and rigorous evaluation to derive meaningful insights from data.
