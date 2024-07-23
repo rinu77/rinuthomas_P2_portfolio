@@ -2,4 +2,422 @@
 title: "Tidy Tuesday Exercise"
 ---
 
-Placeholder file for the future Tidy Tuesday exercise.
+# Introduction
+
+In this analysis, I will load, clean, and explore the dataset provided in \`ratings.csv\`. I will perform exploratory data analysis (EDA) to understand the data, formulate a hypothesis, and fit several machine learning models.
+
+## Load Libraries and Data
+
+```{r}
+# Load necessary packages
+
+library (here)
+library(readr)
+library(tidyverse)
+library(tidymodels)
+library(skimr)
+library(ggplot2)
+```
+
+```{r}
+# Load the data
+# Define data location using here() package
+data_location = here::here("tidytuesday-exercise","data","ratings.csv")
+
+# Load Data
+data = read_csv(data_location)
+head(data)
+str(data)
+```
+
+## Data Wrangling
+
+```{r}
+# Convert 'airdate' to Date type
+data <- data %>%
+  mutate(airdate = as.Date(airdate, format = "%B %d, %Y"))
+
+# Convert columns to appropriate data types
+data <- data %>%
+  mutate(across(c(season, show_number), as.integer))
+
+# Convert '18_49_rating_share' to numeric
+data <- data %>%
+  mutate(rating_18_49 = as.numeric(gsub("[^0-9.]", "", `18_49_rating_share`)))
+
+```
+
+```{r}
+# Check for missing values
+summary(data)
+```
+
+```{r}
+# Remove rows with missing values in relevant columns
+data <- data %>%
+  drop_na(viewers_in_millions, rating_18_49)
+
+```
+
+##  Exploratory Data Analysis (EDA)
+
+### Summary Statistics
+
+```{r}
+# Summary statistics
+summary(data)
+```
+
+### Distribution of Viewers
+
+```{r}
+# Plot the distribution of viewers
+ggplot(data, aes(x = viewers_in_millions)) +
+  geom_histogram(binwidth = 1, fill = "blue", color = "black") +
+  labs(title = "Distribution of Viewers (in millions)",
+       x = "Viewers (in millions)",
+       y = "Frequency")
+```
+
+**Observation:** This distribution suggests that the TV show has episodes that are either moderately popular (around 10 million viewers) or very popular (around 20-25 million viewers). The right-skew indicates that extremely high viewership episodes are less common but still present.
+
+### Viewers Over Time
+
+```{r}
+# Plot viewers over time
+ggplot(data, aes(x = airdate, y = viewers_in_millions)) +
+  geom_line(color = "red") +
+  labs(title = "Viewers Over Time",
+       x = "Air Date",
+       y = "Viewers (in millions)")
+
+```
+
+**Observation:** The "Viewers Over Time" graph highlights significant trends and shifts in audience engagement with the TV show. While the initial years saw high viewership, there has been a consistent decline over the years, indicating changing audience behaviors and market dynamics.
+
+### Ratings vs Viewers
+
+```{r}
+# Plot ratings vs viewers
+ggplot(data, aes(x = rating_18_49, y = viewers_in_millions)) +
+  geom_point(color = "green") +
+  labs(title = "Ratings vs Viewers",
+       x = "18-49 Rating Share",
+       y = "Viewers (in millions)")
+
+```
+
+**Observation:** The scatter plot clearly demonstrates a significant positive relationship between '18-49 Rating Share' and the number of viewers.
+
+## Hypothesis Testing
+
+We hypothesize that episodes with higher '18-49 Rating Share' will have significantly higher 'Viewers in Millions'.
+
+### Linear Regression Analysis
+
+```{r}
+# Perform linear regression
+model <- lm(viewers_in_millions ~ rating_18_49, data = data)
+
+```
+
+```{r}
+# Summary of the model
+summary(model)
+
+```
+
+```{r}
+
+# Coefficients of the model
+coefficients(model)
+
+# Confidence intervals
+confint(model)
+
+# Plot the regression line
+ggplot(data, aes(x = rating_18_49, y = viewers_in_millions)) +
+  geom_point(color = "blue") +
+  geom_smooth(method = "lm", color = "red") +
+  labs(title = "Linear Regression: Viewers vs Rating",
+       x = "18-49 Rating Share",
+       y = "Viewers (in millions)")
+
+```
+
+**Obsservation:** The hypothesis testing plot shows a strong linear relationship between '18-49 Rating Share' and 'Viewers in Millions', supporting the use of a linear model.
+
+## Split Data into Training and Testing Sets
+
+```{r}
+set.seed(123)
+data_split <- initial_split(data, prop = 0.8)
+train_data <- training(data_split)
+test_data <- testing(data_split)
+
+```
+
+## Model Training with Cross-Validation
+
+```{r}
+# Set up cross-validation
+set.seed(123)
+cv_folds <- vfold_cv(train_data, v = 5)
+
+# Define recipe
+data_recipe <- recipe(viewers_in_millions ~ rating_18_49, data = train_data)
+
+# Model specifications
+lm_spec <- linear_reg() %>%
+  set_engine("lm")
+
+rf_spec <- rand_forest(mtry = 1, trees = 500) %>%
+  set_engine("ranger") %>%
+  set_mode("regression")
+
+xgb_spec <- boost_tree(trees = 1000, tree_depth = 6, min_n = 10, loss_reduction = 0.01, 
+                       sample_size = 0.8, mtry = 1) %>%
+  set_engine("xgboost") %>%
+  set_mode("regression")
+
+# Create workflows
+lm_workflow <- workflow() %>%
+  add_recipe(data_recipe) %>%
+  add_model(lm_spec)
+
+rf_workflow <- workflow() %>%
+  add_recipe(data_recipe) %>%
+  add_model(rf_spec)
+
+xgb_workflow <- workflow() %>%
+  add_recipe(data_recipe) %>%
+  add_model(xgb_spec)
+
+# Fit models with cross-validation and save predictions
+control <- control_resamples(save_pred = TRUE)
+
+lm_res <- lm_workflow %>%
+  fit_resamples(resamples = cv_folds, 
+                metrics = metric_set(rmse, rsq), 
+                control = control)
+
+rf_res <- rf_workflow %>%
+  fit_resamples(resamples = cv_folds, 
+                metrics = metric_set(rmse, rsq), 
+                control = control)
+
+xgb_res <- xgb_workflow %>%
+  fit_resamples(resamples = cv_folds, 
+                metrics = metric_set(rmse, rsq), 
+                control = control)
+```
+
+## Model Evaluation
+
+### Linear Regression Model
+
+```{r}
+# Collect metrics
+lm_metrics <- collect_metrics(lm_res)
+lm_metrics
+
+# Plot residuals
+lm_residuals <- collect_predictions(lm_res)
+ggplot(lm_residuals, aes(x = .pred, y = viewers_in_millions)) +
+  geom_point() +
+  geom_abline(slope = 1, intercept = 0, color = "red") +
+  labs(title = "Linear Regression: Predicted vs Actual",
+       x = "Predicted Viewers (in millions)",
+       y = "Actual Viewers (in millions)")
+```
+
+**Observation:** The plot shows a good linear relationship between the predicted and actual values. There is some spread around the regression line, indicating residual variance.
+
+### Random Forest Model
+
+```{r}
+# Collect metrics
+rf_metrics <- collect_metrics(rf_res)
+rf_metrics
+
+# Plot residuals
+rf_residuals <- collect_predictions(rf_res)
+ggplot(rf_residuals, aes(x = .pred, y = viewers_in_millions)) +
+  geom_point() +
+  geom_abline(slope = 1, intercept = 0, color = "red") +
+  labs(title = "Random Forest: Predicted vs Actual",
+       x = "Predicted Viewers (in millions)",
+       y = "Actual Viewers (in millions)")
+
+```
+
+**Observation:** The plot shows a good fit with a tight clustering around the regression line. Handles non-linear relationships well and is robust to outliers.
+
+### XGBoost Model
+
+```{r}
+# Collect metrics
+xgb_metrics <- collect_metrics(xgb_res)
+xgb_metrics
+
+# Plot residuals
+xgb_residuals <- collect_predictions(xgb_res)
+ggplot(xgb_residuals, aes(x = .pred, y = viewers_in_millions)) +
+  geom_point() +
+  geom_abline(slope = 1, intercept = 0, color = "red") +
+  labs(title = "XGBoost: Predicted vs Actual",
+       x = "Predicted Viewers (in millions)",
+       y = "Actual Viewers (in millions)")
+
+```
+
+**Observation:** The plot shows a good fit with a tight clustering around the regression line. XGBoost is known for its high performance and ability to handle complex relationships.
+
+### Decision:
+
+Considering the hypothesis and the model evaluations, I would choose the **Random Forest Model** as the best overall model. The random forest model provides a good balance between bias and variance, capturing the non-linear relationships that might be present in the data. It is less sensitive to outliers and can handle a variety of data distributions, making it more reliable in different scenarios. The linear regression model, while simple and interpretable, might not capture all the nuances in the data as effectively as the random forest model.
+
+## Final Model Evaluation on Test Data
+
+```{r}
+# Split data into training and testing sets
+set.seed(123)
+data_split <- initial_split(data, prop = 0.8)
+train_data <- training(data_split)
+test_data <- testing(data_split)
+
+# Define recipe
+data_recipe <- recipe(viewers_in_millions ~ rating_18_49, data = train_data)
+
+# Define random forest model specification
+rf_spec <- rand_forest(mtry = 1, trees = 500) %>%
+  set_engine("ranger") %>%
+  set_mode("regression")
+
+# Create workflow
+rf_workflow <- workflow() %>%
+  add_recipe(data_recipe) %>%
+  add_model(rf_spec)
+
+# Fit the model on the training data
+rf_fit <- rf_workflow %>%
+  fit(data = train_data)
+
+# Make predictions on the test data
+test_results <- rf_fit %>%
+  predict(new_data = test_data) %>%
+  bind_cols(test_data)
+
+# Calculate performance metrics
+metrics <- metric_set(rmse, rsq)
+test_metrics <- metrics(test_results, truth = viewers_in_millions, estimate = .pred)
+test_metrics
+
+# Plot residuals
+test_results <- test_results %>%
+  mutate(residuals = viewers_in_millions - .pred)
+
+ggplot(test_results, aes(x = .pred, y = viewers_in_millions)) +
+  geom_point(color = "blue") +
+  geom_abline(slope = 1, intercept = 0, color = "red") +
+  labs(title = "Random Forest: Predicted vs Actual on Test Data",
+       x = "Predicted Viewers (in millions)",
+       y = "Actual Viewers (in millions)")
+
+# Residual plot
+ggplot(test_results, aes(x = .pred, y = residuals)) +
+  geom_point(color = "blue") +
+  geom_hline(yintercept = 0, color = "red") +
+  labs(title = "Random Forest: Residuals on Test Data",
+       x = "Predicted Viewers (in millions)",
+       y = "Residuals")
+```
+
+![](http://127.0.0.1:12829/chunk_output/78F09CA49b7754a0/D4F50B05/chqsn31cw7esq/000014.png)
+
+## Final Evaluation Summary
+
+```{r}
+# Print performance metrics
+test_metrics
+```
+
+**Observation:**
+
+The final evaluation of the Random Forest model on the test data confirms its high predictive accuracy and reliability. The model demonstrates:
+
+-   **High R-squared value (0.9618):** Indicates that the model explains about 96.18% of the variance in the number of viewers.
+
+-   **Low RMSE (1.6366):** Suggests that the model's predictions are close to the actual values, with an average error of approximately 1.6366 million viewers.
+
+Given these results, the Random Forest model proves to be a robust and effective choice for predicting the number of viewers based on the '18-49 Rating Share'.
+
+# Summary:
+
+The goal of this analysis was to explore a dataset of TV show ratings, using the hyptohesis that episodes with higher '18-49 Rating Share' will have significantly higher 'Viewers in Millions'. The following steps were taken to reach the final findings:
+
+## Data Wrangling and Exploratory Data Analysis:
+
+-   Started by cleaning the data, converting the 'airdate' to a Date type and ensuring all necessary columns were in appropriate formats. Handled missing values by removing rows with missing data in relevant columns.
+
+-   Basic summary statistics provided an overview of the data distribution and helped identify any potential issues.
+
+-   Visualized the distribution of viewers and observed a spread of viewer counts across different episodes.
+
+-   Plotted viewers over time to understand trends and seasonality.
+
+-   The relationship between '18-49 Rating Share' and 'Viewers in Millions' was visualized, indicating a positive correlation.
+
+## Hypothesis Formulation and Testing
+
+**Hypothesis:** Episodes with higher '18-49 Rating Share' will have significantly higher 'Viewers in Millions'.
+
+To test this hypothesis:
+
+-   Performed a linear regression analysis that showed a strong positive relationship between '18-49 Rating Share' and 'Viewers in Millions'.
+
+## Model Training with Cross-Validation
+
+Trained three different models using the `tidymodels` framework with cross-validation:
+
+1.  **Linear Regression Model**
+
+2.  **Random Forest Model**
+
+3.  **XGBoost Model**
+
+Each model was evaluated using performance metrics such as RMSE and R², and residual plots were generated to assess the fit.
+
+## Model Selection
+
+After evaluating the models, the **Random Forest Model** was selected as the best overall model based on:
+
+-   High R² value, indicating a large proportion of variance explained.
+
+-   Low RMSE, suggesting close predictions to actual values.
+
+-   Robustness and ability to handle non-linear relationships.
+
+## Final Model Evaluation on Test Data
+
+To ensure an honest assessment, we evaluated the Random Forest model on the test data:
+
+-   **Performance Metrics:**
+
+    -   RMSE: 1.6366
+
+    -   R²: 0.9618
+
+-   **Residual Analysis:** The residuals were evenly distributed around zero, indicating a well-fitted model without significant bias.
+
+## **Findings:**
+
+-   Hypothesis that episodes with higher '18-49 Rating Share' would have higher 'Viewers in Millions' was supported by the analysis.
+
+-   The Random Forest model demonstrated strong predictive performance, explaining about 96.18% of the variance in viewership.
+
+-   The final model's residuals were well-distributed, confirming its robustness and reliability.
+
+### Conclusion
+
+This analysis successfully identified and validated the relationship between '18-49 Rating Share' and 'Viewers in Millions' for TV show episodes. The Random Forest model was chosen as the best predictive model, demonstrating high accuracy and robustness. This process highlighted the importance of thorough data exploration, appropriate model selection, and rigorous evaluation to derive meaningful insights from data.

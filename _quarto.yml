@@ -28,7 +28,7 @@ website:
 
 format:
   html:
-    theme: morph
+    theme: pulse
     highlight: zenburn
     css: styles.css
     toc: FALSE
