@@ -59,7 +59,7 @@ data <- data %>%
 
 ```
 
-##  Exploratory Data Analysis (EDA)
+## Exploratory Data Analysis (EDA)
 
 ### Summary Statistics
 
